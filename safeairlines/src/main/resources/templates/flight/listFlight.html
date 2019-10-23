@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" layout:decorate="~{layout/main_layout}"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Safe Airline- List</title>
+</head>
+<body>
+<div layout:fragment="content" >
+
+<!-- Page Content -->
+  <div class="container">
+   <!-- Page Heading/Breadcrumbs -->
+   <nav class="navbar navbar-light bg-light justify-content-between">
+      <a class="navbar-brand">List All Flight.</a>
+     <form class="form-inline" th:action="@{/admin/flight/search}" method="get" >
+         <input class="form-control mr-sm-2"  type="search" placeholder="Search" aria-label="Search" id="searchCriteria" name="searchCriteria" >
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </nav>
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/home">Home</a>
+      </li>
+      <li class="breadcrumb-item active">list </li>
+
+    </ol>
+  <div class="jumbotron">
+     <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Flight Numb</th>
+          <th scope="col">Plane Numb</th>
+          <th scope="col">Dept Date</th>
+          <th scope="col">Arrival Date</th>
+          <th scope="col">Depature Place</th>
+          <th scope="col">Arrival Place</th>
+          <th scope="col">&nbsp;</th>
+          <th scope="col">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="flight,iterStat : ${flights}">
+          <th scope="row" th:text="${iterStat.count}"></th>
+          <td th:text="${flight.flightNumber}"></td>
+          <td th:text="${flight.planeNumber}"></td>
+          <td th:text="${flight.deptDate}"></td>
+          <td th:text="${flight.arrivalDate}"></td>
+          <td th:text="${flight.depaturePlace.name}"></td>
+          <td th:text="${flight.arrivalPlace.name}"></td>
+          <td><a th:href="@{'/admin/flight/edit/{flightId}'(flightId=${flight.id})}">Edit</a></td>
+          <td>
+            <a  th:href="@{'/admin/flight/delete/' + ${flight.id}}">Delete</a>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <a href="/admin/flight/new">New Flight</a>
+ </div>
+    <!-- /.jumbotron -->
+  </div>
+
+</div>
+  <!-- /.container -->
+
+</body>
+</html>
